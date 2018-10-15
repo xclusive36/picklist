@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Picklist Merch App
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content text-uppercase>
+
+  <ion-list>
+    <ion-list-header color="light">
+      <ion-badge item-start color="black">0</ion-badge>
+      Locations
+      <ion-icon name="more" item-end></ion-icon>
+    </ion-list-header>
+    <ion-item>
+      <ion-badge item-start color="red">0</ion-badge>
+      <ion-select [(ngModel)]="location" (ionChange)="locationSelect()" interface="action-sheet">
+        <ion-option *ngFor="let location of locationList">{{ location.title }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header color="light">
+      Categories
+      <ion-icon name="more" item-end></ion-icon>
+    </ion-list-header>
+    <ion-item *ngFor="let item of categoryList" (click)="openPage(item)">
+      <ion-badge item-start color="blue">0</ion-badge>
+      {{ item.title }}
+    </ion-item>
+  </ion-list>
+</ion-content>
