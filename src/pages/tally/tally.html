@@ -7,12 +7,61 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>tally</ion-title>
+    <ion-title>{{ param }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="blue" (click)="configure('itemList')">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-list>
 
+      <ion-item-group *ngFor="let item of thisList">
+        <ion-item *ngIf="item.display" [@fade]>
+          <ion-grid>
+            <ion-row>
+              <ion-col text-center>
+                <button ion-button block icon-only item-start color="red" (click)="countDown(item)">
+                  <ion-icon name="remove"></ion-icon>
+                </button>
+              </ion-col>
+              <ion-col text-center>
+                <button ion-button block outline item-start color="black" (click)="countClear(item)">
+                  {{ item.count }}
+                </button>
+              </ion-col>
+              <ion-col text-center>
+                <button ion-button block icon-only item-end color="blue" (click)="countUp(item)">
+                  <ion-icon name="add"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center>{{ item.title }}</ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-item-group>
+      <ion-item padding text-center *ngIf='thisList?.length === 0' (click)="configure('itemList')">
+        <p>&nbsp;</p>
+      </ion-item>
+
+    </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button block small color="blue" (click)="reset()">RESET</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block small [color]="pickMode[0][0]" (click)="pick()">PICK MODE</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

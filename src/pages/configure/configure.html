@@ -5,14 +5,47 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>configure</ion-title>
+    <ion-title>Configure</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="add(item)">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+  <ion-list>
+    <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event, param)">
+      <ion-item-sliding *ngFor="let item of thisList" #slidingItem>
+        <ion-item class="link" [@fade]>
+          <ion-icon name="ios-arrow-forward-outline" small item-start></ion-icon>
+          {{ item.title }}
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="success" (click)="edit(item, slidingItem)">Edit</button>
+          <button ion-button color="danger" (click)="delete(item, slidingItem)">Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-item-group>
+    <ion-item padding text-center *ngIf='thisList?.length === 0' (click)="add(item)">
+      <p>&nbsp;</p>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button block small disabled color="blue" (click)="reset()">RESET</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block small disabled [color]="pickMode[0][0]" (click)="pick()">PICK MODE</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

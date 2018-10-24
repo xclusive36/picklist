@@ -1,35 +1,57 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Picklist Merch App
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title>Picklist Merch App</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content text-uppercase>
+<ion-content>
 
   <ion-list>
-    <ion-list-header color="light">
-      <ion-badge item-start color="black">0</ion-badge>
-      Locations
-      <ion-icon name="more" item-end></ion-icon>
+    <ion-list-header>
+      <ion-icon name="navigate" padding-right></ion-icon>
+      LOCATIONS
+      <ion-badge margin-left color="gray">{{ totalcount }}</ion-badge>
+      <button ion-button icon-only color="blue" clear item-end (click)="configure('locationList')">
+        <ion-icon name="more" color="blue"></ion-icon>
+      </button>
     </ion-list-header>
+
     <ion-item>
-      <ion-badge item-start color="red">0</ion-badge>
-      <ion-select [(ngModel)]="location" (ionChange)="locationSelect()" interface="action-sheet">
-        <ion-option *ngFor="let location of locationList">{{ location.title }}</ion-option>
+      <ion-badge item-start color="red">{{ locationcount }}</ion-badge>
+      <ion-select [(ngModel)]="location" (ionChange)="locationSelect($event)" interface="action-sheet">
+        <ion-option *ngFor="let item of locationList" [value]="item.title">{{ item.title }}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
 
   <ion-list>
-    <ion-list-header color="light">
-      Categories
-      <ion-icon name="more" item-end></ion-icon>
+    <ion-list-header>
+      CATEGORIES
+      <button ion-button icon-only clear item-end color="blue" (click)="configure('categoryList')">
+        <ion-icon name="more" color="blue"></ion-icon>
+      </button>
     </ion-list-header>
-    <ion-item *ngFor="let item of categoryList" (click)="openPage(item)">
-      <ion-badge item-start color="blue">0</ion-badge>
-      {{ item.title }}
+    <ion-item-sliding *ngFor="let item of categoryList">
+      <button ion-item class="link" *ngIf="item.display" [@fade] (click)="tally(item.title)">
+      <ion-badge item-start color="blue">{{ item.count }}</ion-badge>
+        {{ item.title }}
+      </button>
+    </ion-item-sliding>
+    <ion-item padding text-center text-wrap *ngIf='categoryList?.length === 0' (click)="configure('categoryList')">
+      <p>&nbsp;</p>
     </ion-item>
   </ion-list>
+
 </ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button block small color="blue" (click)="reset()">RESET</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block small [color]="pickMode[0][0]" (click)="pick()">PICK MODE</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
