@@ -70,7 +70,7 @@ export class HomePage {
 
     // set vars and storage
     this.storage = storage;
-    this.storage.remove('masterArray');
+    //this.storage.remove('masterArray');
 
     // pull storage and check if 'masterArray' exists
     this.storage.get('masterArray').then((result) => {

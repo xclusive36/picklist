@@ -1,5 +1,5 @@
-import { Component, trigger, style, transition, animate, } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, AlertController, ItemSliding } from 'ionic-angular';
+import { Component, trigger, style, transition, animate, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, AlertController, ItemSliding, List } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
@@ -54,6 +54,8 @@ import { Storage } from '@ionic/storage';
   ]
 })
 export class ConfigurePage {
+  @ViewChild(List) list: List;
+
   param: any;
   masterArray: any
   locationList: any;
@@ -66,6 +68,7 @@ export class ConfigurePage {
   locationcount: any;
   thisList: any;
   paramID: any;
+  reorder: any = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public alertCtrl: AlertController, public events: Events) {
     this.storage = storage;
@@ -82,6 +85,11 @@ export class ConfigurePage {
     } else {
       this.thisList = this[this.param];
     }
+  }
+
+  reOrder() {
+    this.reorder = !this.reorder;
+    this.list.closeSlidingItems();
   }
 
   reorderItems(indexes, object) {

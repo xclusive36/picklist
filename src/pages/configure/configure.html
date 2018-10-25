@@ -8,6 +8,9 @@
   <ion-navbar>
     <ion-title>Configure</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="reOrder()">
+        <ion-icon name="menu"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="add(item)">
         <ion-icon name="add"></ion-icon>
       </button>
@@ -19,13 +22,13 @@
 <ion-content>
 
   <ion-list>
-    <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event, param)">
+    <ion-item-group reorder="{{reorder}}" (ionItemReorder)="reorderItems($event, param)">
       <ion-item-sliding *ngFor="let item of thisList" #slidingItem>
         <ion-item class="link" [@fade]>
           <ion-icon name="ios-arrow-forward-outline" small item-start></ion-icon>
           {{ item.title }}
         </ion-item>
-        <ion-item-options side="right">
+        <ion-item-options *ngIf="!reorder" side="right">
           <button ion-button color="success" (click)="edit(item, slidingItem)">Edit</button>
           <button ion-button color="danger" (click)="delete(item, slidingItem)">Delete</button>
         </ion-item-options>
